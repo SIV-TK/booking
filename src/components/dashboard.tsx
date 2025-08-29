@@ -1,3 +1,4 @@
+
 "use client";
 
 import * as React from "react";
@@ -55,7 +56,7 @@ export function Dashboard() {
       case "teacher":
         return <TeacherDashboard user={currentUser} />;
       case "admin":
-        return <AdminPanel user={currentUser} />;
+        return <AdminPanel />;
       default:
         return (
           <div className="flex h-full items-center justify-center">

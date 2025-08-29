@@ -1,21 +1,50 @@
+
 "use client";
 
 import * as React from "react";
 import { format } from "date-fns";
-import { BookOpenCheck, Calendar, Users } from "lucide-react";
+import { BookOpenCheck, Calendar, Users, PlusCircle } from "lucide-react";
 
-import { usersData, bookingsData, eventsData } from "@/lib/data";
+import { usersData, bookingsData, eventsData as initialEventsData } from "@/lib/data";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import AiSummary from "../ai-summary";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import CreateEventForm from "./create-event-form";
+import type { Event } from "@/lib/types";
 
 export default function AdminPanel() {
+  const [eventsData, setEventsData] = React.useState(initialEventsData);
+  const [dialogOpen, setDialogOpen] = React.useState(false);
+  
   const sortedBookings = [...bookingsData].sort((a, b) => b.startTime.getTime() - a.startTime.getTime());
+
+  const handleEventCreated = (newEvent: Event) => {
+    setEventsData(prevEvents => [...prevEvents, newEvent]);
+    setDialogOpen(false);
+  };
 
   return (
     <div className="space-y-6">
-      <h1 className="text-3xl font-bold font-headline">Admin Control Panel</h1>
+      <div className="flex justify-between items-center">
+        <h1 className="text-3xl font-bold font-headline">Admin Control Panel</h1>
+        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+          <DialogTrigger asChild>
+            <Button>
+              <PlusCircle className="mr-2" />
+              Create Event
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+              <DialogTitle className="font-headline">Create New Event</DialogTitle>
+            </DialogHeader>
+            <CreateEventForm onEventCreated={handleEventCreated} />
+          </DialogContent>
+        </Dialog>
+      </div>
       
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         <Card>
