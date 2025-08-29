@@ -67,7 +67,7 @@ export default function ParentPortal({ user }: ParentPortalProps) {
   ).sort((a,b) => a.startTime.getTime() - b.startTime.getTime());
 
   const bookedSlotTimes = React.useMemo(() => {
-    return new Set(bookings.map((b) => b.startTime.getTime()));
+    return new Set(bookings.map((b) => `${b.startTime.getTime()}-${b.teacherId}`));
   }, [bookings]);
 
   const handleBookSlot = () => {
@@ -262,12 +262,12 @@ export default function ParentPortal({ user }: ParentPortalProps) {
                 <label className="text-right pt-2">Time</label>
                 <div className="col-span-3 grid grid-cols-3 gap-2 max-h-60 overflow-y-auto p-1">
                   {selectedEvent.availableSlots
-                  .filter(slot => !bookedSlotTimes.has(slot.startTime.getTime()))
+                  .filter(slot => !bookedSlotTimes.has(`${slot.startTime.getTime()}-${slot.teacherId}`))
                   .map((slot) => (
                     <Button
-                      key={slot.startTime.toISOString()}
+                      key={`${slot.startTime.toISOString()}-${slot.teacherId}`}
                       variant={
-                        selectedSlot?.startTime === slot.startTime
+                        selectedSlot?.startTime === slot.startTime && selectedSlot?.teacherId === slot.teacherId
                           ? "default"
                           : "outline"
                       }
