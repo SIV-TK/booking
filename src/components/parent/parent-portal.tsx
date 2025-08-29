@@ -1,3 +1,4 @@
+
 "use client";
 
 import * as React from "react";
@@ -205,7 +206,7 @@ export default function ParentPortal({ user }: ParentPortalProps) {
                                 <p className="text-sm text-muted-foreground flex items-center gap-2"><Clock className="w-4 h-4"/>{format(booking.startTime, 'p')} - {format(booking.endTime, 'p')}</p>
                                 <p className="text-sm text-muted-foreground flex items-center gap-2"><User className="w-4 h-4"/>For {child?.name} with {teacher?.name}</p>
                              </div>
-                             <Badge variant="default" className="bg-accent text-accent-foreground hover:bg-accent/90">
+                             <Badge variant="default">
                                <CheckCircle className="w-3.5 h-3.5 mr-1"/>
                                Confirmed
                              </Badge>

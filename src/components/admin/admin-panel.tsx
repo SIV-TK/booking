@@ -108,9 +108,7 @@ export default function AdminPanel() {
                         <TableCell>{teacher?.name}</TableCell>
                         <TableCell>{format(booking.startTime, "Pp")}</TableCell>
                         <TableCell>
-                          <Badge variant={booking.status === 'confirmed' ? 'default' : 'secondary'}
-                                 className={booking.status === 'confirmed' ? 'bg-accent text-accent-foreground' : ''}
-                          >
+                          <Badge variant={booking.status === 'confirmed' ? 'default' : 'secondary'}>
                             {booking.status}
                           </Badge>
                         </TableCell>
